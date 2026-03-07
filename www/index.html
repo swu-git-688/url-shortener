@@ -272,10 +272,7 @@
       <div class="stat-value" id="stat-total">0</div>
       <div class="stat-label">Total URLs</div>
     </div>
-    <div class="stat">
-      <div class="stat-value" id="stat-custom">0</div>
-      <div class="stat-label">Active in Redis</div>
-    </div>
+
     <div class="stat">
       <div class="stat-value" id="stat-today">0</div>
       <div class="stat-label">Created Today</div>
@@ -579,7 +576,7 @@
   function updateStats() {
     const today = new Date().toDateString();
     document.getElementById('stat-total').textContent = urls.length;
-    document.getElementById('stat-custom').textContent = '—';
+
     document.getElementById('stat-today').textContent = urls.filter(u =>
       u.createdAt && new Date(u.createdAt).toDateString() === today
     ).length;
