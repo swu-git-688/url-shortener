@@ -86,6 +86,7 @@ app.use('/ui', express.static(path.join(__dirname, '../www')));
 
 // short URL redirect — must be last
 app.get('/:code', async (req, res) => {
+  const code = req.params.code; 
   const url = await redis.get(req.params.code);
 
   if (!url) {
