@@ -204,6 +204,7 @@ function render() {
       <td>
         <a href="${esc(full)}" target="_blank" rel="noopener" class="short-link">${esc(short)}</a>
       </td>
+      <td style="text-align:right;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums">${entry.clicks ?? 0}</td>
       <td style="color:var(--muted);font-size:.78rem;white-space:nowrap">${dateStr}</td>
       <td>
         <div class="actions">
