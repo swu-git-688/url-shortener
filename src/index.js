@@ -91,7 +91,7 @@ app.get('/:code', async (req, res) => {
   if (!url) {
     return res.status(404).json({ error: 'Not found' });
   }
-
+  await redis.incrementClick(code);
   return res.redirect(302, url);
 });
 
