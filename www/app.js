@@ -65,7 +65,9 @@ async function loadInfo() {
 // ─── Create ──────────────────────────────────────────────────────────────
 async function createURL() {
   const urlInput = document.getElementById('input-url');
+  const codeInput = document.getElementById('input-code');
   const url = urlInput.value.trim();
+  const customCode = codeInput.value.trim();
 
   if (!url) { toast('Please enter a destination URL', 'error'); return; }
   if (!/^https?:\/\//i.test(url)) { toast('URL must start with http:// or https://', 'error'); return; }
@@ -74,10 +76,13 @@ async function createURL() {
   btn.disabled = true;
 
   try {
+    const body = { url };
+    if (customCode) body.customCode = customCode;
+
     const r = await fetch('/api/shorten', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify(body),
       signal: AbortSignal.timeout(5000),
     });
 
@@ -86,6 +91,7 @@ async function createURL() {
 
     toast(`/${data.code} created`, 'success');
     urlInput.value = '';
+    codeInput.value = '';
     await loadURLs();
   } catch {
     toast('Could not reach API. Is the server running?', 'error');
@@ -250,6 +256,8 @@ function toast(msg, type = 'info') {
 checkHealth();
 setInterval(checkHealth, 30000);
 
-document.getElementById('input-url').addEventListener('keydown', e => {
-  if (e.key === 'Enter') createURL();
+['input-url', 'input-code'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') createURL();
+  });
 });

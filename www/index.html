@@ -42,6 +42,10 @@
         <label for="input-url">Destination URL</label>
         <input type="url" id="input-url" placeholder="https://example.com/very/long/path" />
       </div>
+      <div class="form-group">
+        <label for="input-code">Custom Code <span style="font-weight:400">(optional)</span></label>
+        <input type="text" id="input-code" placeholder="my-link" maxlength="32" />
+      </div>
       <div class="form-actions">
         <button class="btn btn-primary" id="btn-create" onclick="createURL()">
           <svg width="14" height="14"><use href="icons.svg#icon-plus"/></svg>
