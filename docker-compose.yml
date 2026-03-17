@@ -15,4 +15,13 @@ services:
     image: ${DOCKERHUB_USERNAME}/url-shortener:latest
     container_name: url-shortener-app
     platform: linux/amd64
-    # { แก้ไขให้ถูกต้อง }
+    
+    ports:
+    - "3000:3000"   
+
+  environment:
+    - REDIS_HOST=redis  
+
+  depends_on:
+    redis:
+      condition: service_healthy  }
