@@ -10,7 +10,7 @@ const CODES_SET = '__codes__';
 
 const redis = {
   async set(code, url, ttlSeconds = DEFAULT_TTL) {
-    const entry = JSON.stringify({ url, createdAt: new Date().toISOString(),click: 0, enabled: true });
+    const entry = JSON.stringify({ url, createdAt: new Date().toISOString(),clicks: 0, enabled: true });
     await client.set(code, entry, 'EX', ttlSeconds);
     await client.sadd(CODES_SET, code);
     return true;
