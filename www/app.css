@@ -174,3 +174,7 @@ tr:hover td { background: var(--surface2); }
 
 
 svg { display: block; }
+
+/* ── Toggle button ── */
+.btn-icon.toggle-btn.enabled { color: var(--success); }
+.btn-icon.toggle-btn.disabled { color: var(--muted); opacity: .6; }

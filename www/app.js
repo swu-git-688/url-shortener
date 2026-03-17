@@ -134,6 +134,22 @@ async function updateURL() {
   }
 }
 
+// ─── Toggle ──────────────────────────────────────────────────────────────
+async function toggleURL(code) {
+  try {
+    const r = await fetch(`/api/${code}/toggle`, {
+      method: 'PATCH',
+      signal: AbortSignal.timeout(5000),
+    });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || `Error ${r.status}`, 'error'); return; }
+    toast(`/${code} ${data.enabled ? 'enabled' : 'disabled'}`, 'success');
+    await loadURLs();
+  } catch {
+    toast('Could not reach API', 'error');
+  }
+}
+
 // ─── Delete ──────────────────────────────────────────────────────────────
 function openDeleteModal(code) {
   pendingDeleteCode = code;
@@ -197,7 +213,13 @@ function render() {
       ? date.toLocaleDateString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
       : '—';
 
+    const isEnabled = entry.enabled !== false;
     return `<tr>
+      <td>
+        <button class="btn-icon toggle-btn ${isEnabled ? 'enabled' : 'disabled'}" title="${isEnabled ? 'Disable' : 'Enable'}" onclick="toggleURL('${esc(entry.code)}')">
+          <svg width="18" height="18"><use href="icons.svg#${isEnabled ? 'icon-toggle-on' : 'icon-toggle-off'}"/></svg>
+        </button>
+      </td>
       <td class="url-cell">
         <a href="${esc(entry.url)}" target="_blank" rel="noopener" class="url-text" title="${esc(entry.url)}">${esc(entry.url)}</a>
       </td>

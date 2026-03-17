@@ -56,6 +56,12 @@ api.get('/urls', async (req, res) => {
   return res.status(200).json(entries);
 });
 
+api.patch('/:code/toggle', async (req, res) => {
+  const enabled = await redis.toggle(req.params.code);
+  if (enabled === null) return res.status(404).json({ error: 'Not found' });
+  return res.status(200).json({ code: req.params.code, enabled });
+});
+
 api.delete('/:code', async (req, res) => {
   const deleted = await redis.del(req.params.code);
   if (!deleted) {
