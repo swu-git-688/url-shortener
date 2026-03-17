@@ -12,7 +12,7 @@ services:
 
   app:
     # Use the image from Docker Hub
-    image: ${DOCKERHUB_USERNAME}/url-shortener:latest
+    image: tawanthanis/url-shortener:latest
     container_name: url-shortener-app
     platform: linux/amd64
     
@@ -20,7 +20,7 @@ services:
     - "3000:3000"   
 
   environment:
-    - REDIS_HOST=redis  
+    - REDIS_HOST: redis  
 
   depends_on:
     redis:
